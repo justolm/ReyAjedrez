@@ -40,4 +40,10 @@ public class Rey {
         }
         this.totalMovimientos = totalMovimientos;
     }
+
+    public Rey() {
+        setColor(Color.BLANCO);
+        setPosicion(new Posicion(1, 'e'));
+        this.totalMovimientos = 0;
+    }
 }
