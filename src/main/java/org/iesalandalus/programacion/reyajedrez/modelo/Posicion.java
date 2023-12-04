@@ -20,9 +20,14 @@ public class Posicion {
     }
 
     public void setColumna(char columna) {
-        if (columna < "a" || columna > "h"){
+        if (columna < 'a' || columna > 'h'){
             throw new IllegalArgumentException("ERROR: Columna no válida.")
         }
         this.columna = columna;
+    }
+
+    public Posicion(int fila, char columna) {
+        setFila(fila);
+        setColumna(columna);
     }
 }
