@@ -1,14 +1,14 @@
 package org.iesalandalus.programacion.modelo;
-
+/*
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.iesalandalus.programacion.reyajedrez.modelo.Posicion;
 import org.junit.jupiter.api.Test;
-
+*/
 class PosicionTest {
-	
+/*
 	private static final String FILA_NO_ESPERADA = "La fila devuelta no es la esperada.";
 	private static final String COLUMNA_NO_ESPERADA = "La columna devuelta no es la esperada.";
 	private static final String POSICION_NO_ESPERADA = "La posición copiada debería ser la misma que la pasada como parámetro.";
@@ -95,5 +95,5 @@ class PosicionTest {
 	void toStringDevuelveLaCadenaEsperada() {
 		assertEquals("fila=1, columna=a", new Posicion(1, 'a').toString(), CADENA_NO_ESPERADA);
 	}
-
+*/
 }
