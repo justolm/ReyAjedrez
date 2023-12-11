@@ -1,6 +1,7 @@
 package org.iesalandalus.programacion.reyajedrez;
 
 import org.iesalandalus.programacion.reyajedrez.modelo.Color;
+import org.iesalandalus.programacion.reyajedrez.modelo.Direccion;
 import org.iesalandalus.programacion.utilidades.Entrada;
 
 
@@ -38,6 +39,12 @@ public class Consola {
             }
         }while (!color.equals(Color.NEGRO)&&!color.equals(Color.BLANCO));
         return color;
-
+    }
+    public static Direccion mostrarMenuDirecciones (){
+        int num = 1;
+        for (Direccion dir : Direccion.values()){
+            System.out.println("Dirección "+ num + ": " + dir);
+            num++;
+        }
     }
 }
