@@ -78,41 +78,44 @@ public class Rey {
         }
         if (direccion.equals(Direccion.ENROQUE_LARGO) || direccion.equals(Direccion.ENROQUE_CORTO)){
             if (totalMovimientos==0){
-                totalMovimientos++;
                 if (direccion.equals(Direccion.ENROQUE_CORTO)){
                     posicion.setColumna('g');
                 }
                 else {
                     posicion.setColumna('c');
                 }
+                totalMovimientos++;
             }
             else {
                 throw new OperationNotSupportedException("ERROR: El rey ya se ha movido antes.");
             }
         }
-        switch (direccion){
-            case SUR -> posicion.setFila(-1);
-            case SURESTE -> {
-                posicion.setFila(-1);
-                posicion.setColumna((char) +1);
+        try{
+            switch (direccion){
+                case SUR -> posicion.setFila(-1);
+                case SURESTE -> {
+                    posicion.setFila(-1);
+                    posicion.setColumna((char) +1);
+                }
+                case SUROESTE -> {
+                    posicion.setFila(-1);
+                    posicion.setColumna((char) -1);
+                }
+                case NORTE -> posicion.setFila(+1);
+                case NORESTE -> {
+                    posicion.setFila(+1);
+                    posicion.setColumna((char) +1);
+                }
+                case NOROESTE -> {
+                    posicion.setFila(+1);
+                    posicion.setColumna((char) -1);
+                }
+                case ESTE -> posicion.setColumna((char) +1);
+                case OESTE -> posicion.setColumna((char) -1);
             }
-            case SUROESTE -> {
-                posicion.setFila(-1);
-                posicion.setColumna((char) -1);
-            }
-            case NORTE -> posicion.setFila(+1);
-            case NORESTE -> {
-                posicion.setFila(+1);
-                posicion.setColumna((char) +1);
-            }
-            case NOROESTE -> {
-                posicion.setFila(+1);
-                posicion.setColumna((char) -1);
-            }
-            case ESTE -> posicion.setColumna((char) +1);
-            case OESTE -> posicion.setColumna((char) -1);
+            totalMovimientos++;
+        } catch (Exception e) {
+            throw new OperationNotSupportedException("ERROR: Movimiento no válido (se sale del tablero).");
         }
-        // Falta crear el error si el rey se intenta mover fuera del tablero.
-
     }
 }
