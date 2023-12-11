@@ -56,7 +56,7 @@ public class Consola {
             System.out.print("Introduce el número de la dirección que deseas elegir: ");
             dirElegida=Entrada.entero();
         }while (dirElegida > 0 && dirElegida < 11);
-        switch  (dirElegida){
+        switch (dirElegida){
             case 1 -> direccion = Direccion.NORTE;
             case 2 -> direccion = Direccion.NORESTE;
             case 3 -> direccion = Direccion.ESTE;

@@ -66,10 +66,9 @@ public class Rey {
 
     @Override
     public String toString() {
-        return "Rey{" +
-                "color=" + color +
-                ", posicion=" + posicion +
-                '}';
+        return "color=" + color +
+                ", posicion=(" + posicion +
+                ')';
     }
 
     public void mover (Direccion direccion) throws OperationNotSupportedException {
