@@ -3,7 +3,6 @@ package org.iesalandalus.programacion.reyajedrez;
 import org.iesalandalus.programacion.reyajedrez.modelo.Color;
 import org.iesalandalus.programacion.utilidades.Entrada;
 
-import java.util.Arrays;
 
 public class Consola {
     private Consola() {
@@ -26,14 +25,19 @@ public class Consola {
     }
     public static Color color; Color elegirColor(){
         do{
-            System.out.println("Elige un color (Blanco o Negro): ");
-            System.out.println(Arrays.toString(Color.values()));
-            color = Color.valueOf("Blanco");
-            return color;
-
-            //for para las opciones
-            //switch para devolver las opciones
-        }while (!color.equals("Blanco"));
+            System.out.println("Elige un color: ");
+            int num = 1;
+            for (Color col : Color.values()){
+                System.out.println("Opción "+ num + ": " + col);
+                num++;
+            }
+            int colorElegido=Entrada.entero();
+            switch (colorElegido){
+                case 1: color=Color.BLANCO;
+                case 2: color=Color.NEGRO;
+            }
+        }while (!color.equals(Color.NEGRO)&&!color.equals(Color.BLANCO));
+        return color;
 
     }
 }
