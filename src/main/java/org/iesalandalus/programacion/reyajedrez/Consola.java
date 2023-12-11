@@ -40,11 +40,12 @@ public class Consola {
         }while (!color.equals(Color.NEGRO)&&!color.equals(Color.BLANCO));
         return color;
     }
-    public static Direccion mostrarMenuDirecciones (){
+    public static void mostrarMenuDirecciones (){
         int num = 1;
         for (Direccion dir : Direccion.values()){
             System.out.println("Dirección "+ num + ": " + dir);
             num++;
         }
     }
+
 }
