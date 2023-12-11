@@ -34,18 +34,41 @@ public class Consola {
             }
             int colorElegido=Entrada.entero();
             switch (colorElegido){
-                case 1: color=Color.BLANCO;
-                case 2: color=Color.NEGRO;
+                case 1 -> color=Color.BLANCO;
+                case 2 -> color=Color.NEGRO;
             }
         }while (!color.equals(Color.NEGRO)&&!color.equals(Color.BLANCO));
         return color;
     }
-    public static void mostrarMenuDirecciones (){
+    private static void mostrarMenuDirecciones (){
         int num = 1;
         for (Direccion dir : Direccion.values()){
             System.out.println("Dirección "+ num + ": " + dir);
             num++;
         }
+    }
+
+    public static Direccion direccion; Direccion elegirDireccion(){
+        int dirElegida=0;
+        do{
+            System.out.println("Elige una dirección de las siguientes opciones:");
+            mostrarMenuDirecciones();
+            System.out.print("Introduce el número de la dirección que deseas elegir: ");
+            dirElegida=Entrada.entero();
+        }while (dirElegida > 0 && dirElegida < 11);
+        switch  (dirElegida){
+            case 1 -> direccion = Direccion.NORTE;
+            case 2 -> direccion = Direccion.NORESTE;
+            case 3 -> direccion = Direccion.ESTE;
+            case 4 -> direccion = Direccion.SURESTE;
+            case 5 -> direccion = Direccion.SUR;
+            case 6 -> direccion = Direccion.SUROESTE;
+            case 7 -> direccion = Direccion.OESTE;
+            case 8 -> direccion = Direccion.NOROESTE;
+            case 9 -> direccion = Direccion.ENROQUE_CORTO;
+            case 10 -> direccion = Direccion.ENROQUE_LARGO;
+        }
+        return direccion;
     }
 
 }
