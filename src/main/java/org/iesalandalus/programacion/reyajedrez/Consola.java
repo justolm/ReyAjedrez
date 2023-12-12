@@ -24,7 +24,8 @@ public class Consola {
         }while (opcion < 1 || opcion > 4);
         return opcion;
     }
-    public static Color color; Color elegirColor(){
+    public static Color elegirColor(){
+        Color color = null;
         do{
             System.out.println("Elige un color: ");
             int num = 1;
@@ -48,8 +49,9 @@ public class Consola {
         }
     }
 
-    public static Direccion direccion; Direccion elegirDireccion(){
+    public static Direccion elegirDireccion(){
         int dirElegida=0;
+        Direccion direccion = null;
         do{
             System.out.println("Elige una dirección de las siguientes opciones:");
             mostrarMenuDirecciones();
