@@ -29,4 +29,8 @@ public class MainApp {
         new Rey();
         return;
     }
+
+    private void crearReyColor(Color color){
+        new Rey(color);
+    }
 }
