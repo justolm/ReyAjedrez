@@ -7,25 +7,28 @@ import org.iesalandalus.programacion.reyajedrez.modelo.Rey;
 
 import javax.naming.OperationNotSupportedException;
 
-import static org.iesalandalus.programacion.reyajedrez.Consola.elegirDireccion;
-import static org.iesalandalus.programacion.reyajedrez.Consola.elegirOpcionMenu;
+import static org.iesalandalus.programacion.reyajedrez.Consola.*;
 
 public class MainApp {
-    public static void main(String[] args) {
-
+    public void main(String[] args) {
+        try{
+            ejecutarOpcion();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
     public static class rey {
         private static Color color;
         private Posicion posicion;
         private int totalMovimientos;
     }
-    public int ejecutarOpcion(){
-        elegirOpcionMenu();
+    public void ejecutarOpcion(){
+        int opcion = elegirOpcionMenu();
         switch (opcion){
-            case 1 -> // Crear el rey por defecto
-            case 2 -> // Crear el rey eligiendo el color
-            case 3 -> // Mover
-            case 4 -> // Salir
+            case 1 -> crearReyDefecto();
+            case 2 -> System.out.println("Pendiente de crear");// Crear el rey eligiendo el color
+            case 3 -> mover();
+            case 4 -> despedirse();
             default -> throw new IllegalStateException("Ha elegido una opción no válida: " + opcion);
         }
     }
@@ -42,10 +45,17 @@ public class MainApp {
         direccion = Consola.elegirDireccion();
 
         try {
-            Rey.mover(direccion);
+            //Rey.mover(direccion);
         } catch (OperationNotSupportedException e) {
             throw new RuntimeException(e);
         }
-
+    }
+    private void mostrarRey (Rey rey){
+        try{
+            Rey.getColor();
+            Rey.getPosicion();
+        }catch (OperationNotSupportedException e) {
+            throw new RuntimeException("El rey no está creado.");
+        }
     }
 }
