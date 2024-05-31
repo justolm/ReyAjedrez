@@ -1,5 +1,6 @@
 package org.iesalandalus.programacion.reyajedrez.modelo;
 
+import javax.naming.OperationNotSupportedException;
 import java.util.Objects;
 
 public class Posicion {
@@ -10,9 +11,9 @@ public class Posicion {
         return fila;
     }
 
-    public void setFila(int fila) {
+    public void setFila(int fila) throws OperationNotSupportedException {
         if (fila < 1 || fila > 8){
-            throw new IllegalArgumentException("ERROR: Fila no válida.");
+            throw new OperationNotSupportedException("ERROR: Movimiento no válido (se sale del tablero).");
         }
         this.fila = fila;
     }
@@ -21,16 +22,20 @@ public class Posicion {
         return columna;
     }
 
-    public void setColumna(char columna) {
+    public void setColumna(char columna) throws OperationNotSupportedException {
         if (columna < 'a' || columna > 'h'){
-            throw new IllegalArgumentException("ERROR: Columna no válida.");
+            throw new OperationNotSupportedException("ERROR: Movimiento no válido (se sale del tablero).");
         }
         this.columna = columna;
     }
 
     public Posicion(int fila, char columna) {
-        setFila(fila);
-        setColumna(columna);
+        try {
+            setFila(fila);
+            setColumna(columna);
+        } catch (OperationNotSupportedException e) {
+            System.out.println("ERROR: Movimiento no válido (se sale del tablero).");
+        }
     }
 
     public Posicion(Posicion posicion) {

@@ -4,10 +4,13 @@ import org.iesalandalus.programacion.reyajedrez.modelo.Color;
 import org.iesalandalus.programacion.reyajedrez.modelo.Direccion;
 import org.iesalandalus.programacion.utilidades.Entrada;
 
+import java.util.Objects;
+
 
 public class Consola {
     private Consola() {
     }
+
     public static void mostrarMenu(){
         System.out.println("Opciones del menú:");
         System.out.println("1. Crear rey por defecto.");
@@ -15,16 +18,17 @@ public class Consola {
         System.out.println("3. Mover.");
         System.out.println("4. Salir.");
     }
+
     public static int elegirOpcionMenu(){
         int opcion;
-        mostrarMenu();
         do{
-            System.out.println("Elija una opción (entre 1 y 4)");
+            System.out.print("Elija una opción (entre 1 y 4): ");
             opcion = Entrada.entero();
         }while (opcion < 1 || opcion > 4);
         return opcion;
     }
-    public static Color elegirColor(){
+
+    public static Color elegirColor() {
         Color color = null;
         do{
             System.out.println("Elige un color: ");
@@ -38,10 +42,11 @@ public class Consola {
                 case 1 -> color=Color.BLANCO;
                 case 2 -> color=Color.NEGRO;
             }
-        }while (!color.equals(Color.NEGRO)&&!color.equals(Color.BLANCO));
+        }while (!Objects.equals(color, Color.NEGRO) &&!Objects.equals(color, Color.BLANCO));
         return color;
     }
-    private static void mostrarMenuDirecciones (){
+
+    public static void mostrarMenuDirecciones (){
         int num = 1;
         for (Direccion dir : Direccion.values()){
             System.out.println("Dirección "+ num + ": " + dir);
@@ -49,15 +54,15 @@ public class Consola {
         }
     }
 
-    public static Direccion elegirDireccion(){
-        int dirElegida=0;
+    public static Direccion elegirDireccion() throws NullPointerException  {
+        int dirElegida;
         Direccion direccion = null;
         do{
             System.out.println("Elige una dirección de las siguientes opciones:");
             mostrarMenuDirecciones();
             System.out.print("Introduce el número de la dirección que deseas elegir: ");
             dirElegida=Entrada.entero();
-        }while (dirElegida > 0 && dirElegida < 11);
+        }while (dirElegida < 1 || dirElegida > 10);
         switch (dirElegida){
             case 1 -> direccion = Direccion.NORTE;
             case 2 -> direccion = Direccion.NORESTE;

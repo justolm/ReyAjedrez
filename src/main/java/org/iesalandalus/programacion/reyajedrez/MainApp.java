@@ -2,7 +2,6 @@ package org.iesalandalus.programacion.reyajedrez;
 
 import org.iesalandalus.programacion.reyajedrez.modelo.Color;
 import org.iesalandalus.programacion.reyajedrez.modelo.Direccion;
-import org.iesalandalus.programacion.reyajedrez.modelo.Posicion;
 import org.iesalandalus.programacion.reyajedrez.modelo.Rey;
 
 import javax.naming.OperationNotSupportedException;
@@ -10,52 +9,84 @@ import javax.naming.OperationNotSupportedException;
 import static org.iesalandalus.programacion.reyajedrez.Consola.*;
 
 public class MainApp {
-    public void main(String[] args) {
-        try{
-            ejecutarOpcion();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    private static Rey rey;
+    public static void main(String[] args) {
+        int opcion=0;
+        do {
+            try{
+                Consola.mostrarMenu();
+                opcion = elegirOpcionMenu();
+                ejecutarOpcion(opcion);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        } while (opcion != 4);
+
     }
-    public static class rey {
-        private static Color color;
-        private Posicion posicion;
-        private int totalMovimientos;
-    }
-    public void ejecutarOpcion(){
-        int opcion = elegirOpcionMenu();
+
+    public static void ejecutarOpcion(int opcion)  throws NullPointerException, IllegalArgumentException {
         switch (opcion){
-            case 1 -> crearReyDefecto();
-            case 2 -> System.out.println("Pendiente de crear");// Crear el rey eligiendo el color
-            case 3 -> mover();
+            case 1 -> {
+                if (rey == null) {
+                    crearReyDefecto();
+                }
+                else System.out.println("ERROR: Ya se ha creado el rey.");
+            }
+            case 2 -> {
+                if (rey == null) {
+                    Color colorElegido;
+                    colorElegido = elegirColor();
+                    crearReyColor(colorElegido);
+                }
+                else System.out.println("ERROR: Ya se ha creado el rey.");
+            }
+            case 3 -> {
+                if (rey == null){
+                    throw new IllegalArgumentException("ERROR: No existe ningún rey para mover.");
+                }
+                mover();
+                System.out.println(rey.toString());
+            }
             case 4 -> despedirse();
             default -> throw new IllegalStateException("Ha elegido una opción no válida: " + opcion);
         }
     }
-    private void crearReyDefecto(){
-        new Rey();
-        return;
+
+    private static void crearReyDefecto(){
+        try {
+            rey = new Rey();
+            System.out.println("Rey creado con éxito.");
+            mostrarRey();
+        } catch (NullPointerException e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 
-    private void crearReyColor(Color color){
-        new Rey(color);
+    private static void crearReyColor(Color color){
+        rey = new Rey(color);
+        System.out.println("Rey creado con éxito.");
+        mostrarRey();
     }
-    private void mover(){
-        Direccion direccion = null;
+
+    private static void mover(){
+        Direccion direccion;
+        Consola.mostrarMenuDirecciones();
         direccion = Consola.elegirDireccion();
 
         try {
-            //Rey.mover(direccion);
-        } catch (OperationNotSupportedException e) {
-            throw new RuntimeException(e);
+            rey.mover(direccion);
+        } catch (NullPointerException | OperationNotSupportedException e) {
+            System.out.println(e.getMessage());
         }
     }
-    private void mostrarRey (Rey rey){
+
+    private static void mostrarRey (){
         try{
-            Rey.getColor();
-            Rey.getPosicion();
-        }catch (OperationNotSupportedException e) {
-            throw new RuntimeException("El rey no está creado.");
+            System.out.println(rey.getColor());
+            System.out.println(rey.getPosicion());
+        }catch (Exception e) {
+            System.out.println("El rey no está creado.");
         }
     }
 }

@@ -3,17 +3,17 @@ package org.iesalandalus.programacion.reyajedrez.modelo;
 import javax.naming.OperationNotSupportedException;
 
 public class Rey {
-    public Color color;
-    public Posicion posicion;
+    private Color color;
+    private Posicion posicion;
     private int totalMovimientos;
 
     public Color getColor() {
         return color;
     }
 
-    public void setColor(Color color) {
-        if (color==null){
-            throw new RuntimeException("ERROR: El color no puede ser nulo.");
+    private void setColor(Color color) throws NullPointerException, IllegalArgumentException {
+        if (color == null){
+            throw new NullPointerException("ERROR: El color no puede ser nulo.");
         }
         if (!color.equals(Color.BLANCO)  && !color.equals(Color.NEGRO)){
             throw new IllegalArgumentException("El color no es el esperado.");
@@ -22,12 +22,12 @@ public class Rey {
     }
 
     public Posicion getPosicion() {
-        return posicion;
+        return new Posicion(posicion);
     }
 
-    public void setPosicion(Posicion posicion) {
-        if (posicion==null){
-            throw new RuntimeException("La posición no es la esperada.");
+    private void setPosicion(Posicion posicion) throws NullPointerException {
+        if (posicion == null){
+            throw new NullPointerException("La posición no es la esperada.");
         }
         this.posicion = new Posicion(posicion);
     }
@@ -36,9 +36,9 @@ public class Rey {
         return totalMovimientos;
     }
 
-    public void setTotalMovimientos(int totalMovimientos) {
+    public void setTotalMovimientos(int totalMovimientos) throws IllegalArgumentException {
         if (totalMovimientos<0){
-            throw new RuntimeException("ERROR: El rey no está en su posición inicial.");
+            throw new IllegalArgumentException("ERROR: El rey no está en su posición inicial.");
         }
         this.totalMovimientos = totalMovimientos;
     }
@@ -46,7 +46,7 @@ public class Rey {
     public Rey() {
         setColor(Color.BLANCO);
         setPosicion(new Posicion(1, 'e'));
-        this.totalMovimientos = 0;
+        totalMovimientos=0;
     }
 
     public Rey(Color color) {
@@ -61,7 +61,7 @@ public class Rey {
             setColor(Color.NEGRO);
             setPosicion(new Posicion(8, 'e'));
         }
-        this.totalMovimientos = 0;
+        setTotalMovimientos(0);
     }
 
     @Override
@@ -71,50 +71,50 @@ public class Rey {
                 ')';
     }
 
-    public void mover (Direccion direccion) throws OperationNotSupportedException {
+    public void mover (Direccion direccion) throws NullPointerException, OperationNotSupportedException {
         if (direccion == null){
             throw new NullPointerException("ERROR: La dirección no puede ser nula.");
         }
-        if (direccion.equals(Direccion.ENROQUE_LARGO) || direccion.equals(Direccion.ENROQUE_CORTO)){
-            if (totalMovimientos==0){
-                if (direccion.equals(Direccion.ENROQUE_CORTO)){
-                    posicion.setColumna('g');
+        int posFila = posicion.getFila();
+        char posCol = posicion.getColumna();
+        switch (direccion){
+            case ENROQUE_CORTO, ENROQUE_LARGO -> {
+                if ((posicion.getFila() != 1 && posicion.getFila() != 8) || posicion.getColumna()!='e') {
+                    throw new OperationNotSupportedException("ERROR: El rey no está en su posición inicial.");
+                } else {
+                    if (getTotalMovimientos() == 0) {
+                        if (direccion.equals(Direccion.ENROQUE_CORTO)) {
+                            posicion.setColumna('g');
+                        } else {
+                            posicion.setColumna('c');
+                        }
+                    }
+                    else {
+                        throw new OperationNotSupportedException("ERROR: El rey ya se ha movido antes.");
+                    }
                 }
-                else {
-                    posicion.setColumna('c');
-                }
-                totalMovimientos++;
             }
-            else {
-                throw new OperationNotSupportedException("ERROR: El rey ya se ha movido antes.");
+            case SUR -> posicion.setFila(posFila-1);
+            case SURESTE -> {
+                posicion.setFila(posFila-1);
+                posicion.setColumna((char) (posCol+1));
             }
+            case SUROESTE -> {
+                posicion.setFila(posFila-1);
+                posicion.setColumna((char) (posCol-1));
+            }
+            case NORTE -> posicion.setFila(posFila+1);
+            case NORESTE -> {
+                posicion.setFila(posFila+1);
+                posicion.setColumna((char) (posCol+1));
+            }
+            case NOROESTE -> {
+                posicion.setFila(posFila+1);
+                posicion.setColumna((char) (posCol-1));
+            }
+            case ESTE -> posicion.setColumna((char) (posCol+1));
+            case OESTE -> posicion.setColumna((char) (posCol-1));
         }
-        try{
-            switch (direccion){
-                case SUR -> posicion.setFila(-1);
-                case SURESTE -> {
-                    posicion.setFila(-1);
-                    posicion.setColumna((char) +1);
-                }
-                case SUROESTE -> {
-                    posicion.setFila(-1);
-                    posicion.setColumna((char) -1);
-                }
-                case NORTE -> posicion.setFila(+1);
-                case NORESTE -> {
-                    posicion.setFila(+1);
-                    posicion.setColumna((char) +1);
-                }
-                case NOROESTE -> {
-                    posicion.setFila(+1);
-                    posicion.setColumna((char) -1);
-                }
-                case ESTE -> posicion.setColumna((char) +1);
-                case OESTE -> posicion.setColumna((char) -1);
-            }
-            totalMovimientos++;
-        } catch (Exception e) {
-            throw new OperationNotSupportedException("ERROR: Movimiento no válido (se sale del tablero).");
-        }
+        totalMovimientos++;
     }
 }
